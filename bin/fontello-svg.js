@@ -43,8 +43,10 @@ app.option('--no-skip', 'Do not skip existing files');
 app.option('--verbose', 'Verbose output');
 app.parse(process.argv);
 
+let opts = app.opts();
+
 // Required parameters
-if (!app.config || !app.out) {
+if (!opts.config || !opts.out) {
   l([
     '',
     '  Error: missing required parameters (--config, --out)'.error,
@@ -54,11 +56,11 @@ if (!app.config || !app.out) {
 }
 
 // Start
-var config = require(path.resolve(app.config));
-var out = path.resolve(app.out);
-var colors = app.fillColors || {'black': '#000000'};
-var backgroundUrlPath = app.cssPath || '';
-var fileFormat = app.fileFormat || "{0}-{1}-{2}.svg";
+var config = require(path.resolve(opts.config));
+var out = path.resolve(opts.out);
+var colors = opts.fillColors || {'black': '#000000'};
+var backgroundUrlPath = opts.cssPath || '';
+var fileFormat = opts.fileFormat || "{0}-{1}-{2}.svg";
 
 start(config.glyphs, out, colors, app);
 
@@ -73,7 +75,7 @@ function start(rawGlyphs, out, colors, app) {
     fs.mkdirSync(out);
   }
 
-  if (app.skip) {
+  if (opts.skip) {
     fontelloSvg.missingGlyphs(glyphs, out, processGlyphs);
   } else {
     processGlyphs(glyphs);
@@ -86,7 +88,7 @@ function start(rawGlyphs, out, colors, app) {
     var downloader = fontelloSvg.downloadSvgs(glyphsToDl, out);
 
     // Output skipped glyphs
-    if (app.skip && app.verbose) {
+    if (opts.skip && opts.verbose) {
       glyphsSkipped.forEach(function(glyph) {
         l('[skipped]'.data + ' existing SVG: ' + glyph.name + '-' + glyph.collection, 2);
       });
@@ -101,7 +103,7 @@ function start(rawGlyphs, out, colors, app) {
     });
 
     // Write CSS
-    if (app.css) {
+    if (opts.css) {
       fontelloSvg.writeCss(glyphs, out + '/index.css', backgroundUrlPath, function() {
         l('[saved]'.info + ' ' + relativePath(out + '/index.css'), 2);
       });
