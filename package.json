@@ -10,17 +10,17 @@
   },
   "main": "index.js",
   "dependencies": {
-    "request": "~2.38.0",
-    "underscore": "~1.5.2",
-    "colors": "~0.6.2",
-    "commander": "~2.0.0",
-    "mkdirp": "~0.3.5",
-    "nodupes": "~0.1.0",
-    "async": "~0.2.9"
+    "async": "^0.2.9",
+    "colors": "^1.4.0",
+    "commander": "^10.0.0",
+    "mkdirp": "^2.1.3",
+    "nodupes": "^0.1.0",
+    "request": "^2.88.2",
+    "underscore": "^1.13.6"
   },
   "devDependencies": {
-    "tape": "~2.1.0",
-    "rimraf": "~2.2.2"
+    "rimraf": "^4.1.1",
+    "tape": "^5.6.3"
   },
   "scripts": {
     "test": "tape test/*.js"
